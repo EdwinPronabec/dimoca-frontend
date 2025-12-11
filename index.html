@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard para monitoreo IoT de dispositivos Ufox con Sigfox">
+    <title>Ufox Monitor | Dashboard IoT</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <main id="login-section" class="container fade-in">
+        <div class="login-header">
+            <h2>🔐 Acceso Seguro</h2>
+            <p>Ingresa tus credenciales para continuar</p>
+        </div>
+        
+        <form id="login-form">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Usuario" required autocomplete="username">
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Contraseña" required autocomplete="current-password">
+            </div>
+            <button type="submit" id="btn-login">Ingresar al Sistema</button>
+            <p id="login-error" class="error-msg"></p>
+        </form>
+    </main>
+
+    <main id="dashboard-section" class="container hidden">
+        <header class="dashboard-header">
+            <div class="brand">
+                <h1>📡 Ufox Monitor</h1>
+                <span class="status-badge">En Línea 🟢</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+        </header>
+
+        <nav class="tabs">
+            <button id="tab-home" class="tab-btn active" onclick="cambiarPestana('home')">📊 Resumen</button>
+            <button id="tab-charts" class="tab-btn" onclick="cambiarPestana('charts')">📈 Tendencias</button>
+        </nav>
+
+        <div id="view-home" class="view-section">
+            <section class="kpi-cards">
+                <div class="card">
+                    <h3>🌡️ Última Temperatura</h3>
+                    <p id="last-temp">-- °C</p>
+                </div>
+                <div class="card">
+                    <h3>💧 Última Humedad</h3>
+                    <p id="last-hum">-- %</p>
+                </div>
+                <div class="card">
+                    <h3>🔋 Batería</h3>
+                    <p id="last-bat">-- %</p>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <div class="data-header">
+                    <h3>Historial de Mediciones</h3>
+                    <div class="header-actions">
+                        <button class="btn-download" onclick="descargarCSV()">
+                            📥 Descargar CSV
+                        </button>
+                        
+                        <button class="btn-refresh" onclick="cargarDatosReales()">
+                            🔄 Actualizar
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha / Hora</th>
+                                <th>Dispositivo ID</th>
+                                <th>Temp (°C)</th>
+                                <th>Hum (%)</th>
+                                <th>Bat (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-datos"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div id="view-charts" class="view-section hidden">
+            
+            <div id="chart-alerts" class="alert-container hidden"></div>
+
+            <div class="chart-controls">
+                
+                <div class="filter-section">
+                    <div class="control-group">
+                        <label>📅 Rango:</label>
+                        <select id="data-limit" onchange="limpiarFechas(); cargarDatosReales()">
+                            <option value="20" selected>Últimos 20</option>
+                            <option value="50">Últimos 50</option>
+                            <option value="100">Últimos 100</option>
+                            <option value="500">Últimos 500</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group date-inputs">
+                        <label>Desde:</label>
+                        <input type="date" id="date-start" onchange="activarModoFecha()">
+                        <label>Hasta:</label>
+                        <input type="date" id="date-end" onchange="activarModoFecha()">
+                        <button class="btn-search" onclick="cargarDatosReales()">🔎 Buscar</button>
+                    </div>
+                </div>
+
+                <div class="sensor-section">
+                    <div class="control-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="chk-temp" checked onchange="toggleDataset(0)"> 🌡️ Temp
+                        </label>
+                        <div class="threshold-input">
+                            <input type="number" id="limit-temp" value="30" placeholder="Max">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="chk-hum" checked onchange="toggleDataset(1)"> 💧 Hum
+                        </label>
+                        <div class="threshold-input">
+                            <input type="number" id="limit-hum" value="80" placeholder="Max">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="chart-scroll-wrapper">
+                <div class="chart-body" id="chart-body">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <p id="loading-msg" class="hidden text-center">Sincronizando datos...</p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

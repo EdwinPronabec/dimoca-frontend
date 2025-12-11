@@ -1,0 +1,329 @@
+/* --- 1. RESET Y VARIABLES --- */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-color: #f3f4f6;
+    --text-color: #1f2937;
+    --card-bg: #ffffff;
+    --danger-color: #ef4444;
+    --success-color: #10b981;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+/* --- 2. CONTENEDORES --- */
+.container {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 800px;
+    transition: opacity 0.3s ease;
+}
+
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.5s ease-in; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 3. FORMULARIOS E INPUTS --- */
+.input-group { margin-bottom: 1rem; }
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover { background-color: var(--primary-hover); }
+
+/* --- 4. DASHBOARD COMPONENTS --- */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1rem;
+}
+
+.status-badge {
+    font-size: 0.8rem;
+    background: #dcfce7;
+    color: #166534;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.btn-logout {
+    background-color: var(--danger-color);
+    width: auto; /* Override del ancho 100% */
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-logout:hover { background-color: #dc2626; }
+
+/* KPIs */
+.kpi-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.card h3 { margin: 0 0 0.5rem 0; font-size: 0.9rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+.card p { margin: 0; font-size: 2rem; font-weight: 700; color: var(--text-color); }
+
+/* TABLA */
+.data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.btn-refresh {
+    background-color: var(--success-color);
+    width: auto;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+}
+.btn-refresh:hover { background-color: #059669; }
+
+.table-responsive { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th { background-color: #f8fafc; font-weight: 600; color: #475569; }
+tr:hover { background-color: #f1f5f9; }
+
+.error-msg { color: var(--danger-color); margin-top: 10px; font-size: 0.9rem; text-align: center; }
+.text-center { text-align: center; color: #64748b; margin-top: 10px;}
+
+/* --- 5. TABS / PESTAÑAS --- */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.tab-btn {
+    background: none;
+    color: #64748b;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    padding: 10px 20px;
+    width: auto;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* --- 6. GRÁFICO --- */
+.chart-container {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    height: 400px; /* Altura fija para el gráfico */
+    width: 100%;
+}
+
+/* --- 7. CONTROLES DEL GRÁFICO --- */
+.chart-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.toggle-label {
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.threshold-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.threshold-input input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+}
+
+/* --- 8. ALERTAS EN GRÁFICO --- */
+.alert-container {
+    background-color: #fee2e2; /* Fondo rojo muy suave */
+    border: 1px solid #ef4444;
+    color: #b91c1c; /* Texto rojo oscuro */
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* --- 9. SCROLL DEL GRÁFICO --- */
+.chart-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Muestra scrollbar si es necesario */
+    padding-bottom: 10px; /* Espacio para la barra de scroll */
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+}
+
+.chart-body {
+    position: relative;
+    height: 400px; /* Altura fija */
+    width: 100%; /* Por defecto ocupa el 100%, JS lo cambiará si hay muchos datos */
+    min-width: 600px; /* Ancho mínimo para que no se vea horrible en celular */
+}
+
+/* Estilo para el SELECT nuevo */
+select {
+    padding: 5px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: white;
+}
+
+/* --- MEJORAS EN CONTROLES --- */
+.chart-controls {
+    display: flex;
+    flex-direction: column; /* Apilamos filtros arriba y sensores abajo */
+    gap: 15px;
+}
+
+.filter-section, .sensor-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.filter-section {
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 15px;
+}
+
+.date-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-search {
+    width: auto;
+    padding: 6px 15px;
+    background-color: #6366f1; /* Color índigo */
+    font-size: 0.9rem;
+}
+.btn-search:hover { background-color: #4f46e5; }
+
+/* Acomodar los botones a la derecha */
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Estilo del botón CSV */
+.btn-download {
+    background-color: #f59e0b; /* Naranja ámbar */
+    width: auto;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+}
+.btn-download:hover { background-color: #d97706; }
