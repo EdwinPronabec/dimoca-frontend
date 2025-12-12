@@ -4,7 +4,7 @@
  */
 
 // CONFIGURACIÓN
-const API_URL = "http://localhost:8000"; // URL del Backend (Docker)
+const API_URL = "https://dimoca-backend.onrender.com"; // URL del Backend (Docker)
 const ENDPOINTS = {
     LOGIN: "/token",
     USER_INFO: "/users/me",
